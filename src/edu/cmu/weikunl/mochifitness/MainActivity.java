@@ -1,6 +1,7 @@
 package edu.cmu.weikunl.mochifitness;
 
 import com.facebook.AppEventsLogger;
+import com.facebook.widget.LoginButton;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -25,6 +26,7 @@ public class MainActivity extends FragmentActivity {
 	        // Or set the fragment from restored state info
 	        mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(android.R.id.content);
 	    }
+
 	}
 
 
