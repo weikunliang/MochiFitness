@@ -1,18 +1,31 @@
 package edu.cmu.weikunl.mochifitness;
 
-import android.support.v7.app.ActionBarActivity;
+import com.facebook.AppEventsLogger;
+
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends FragmentActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
+	private MainFragment mainFragment;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+	    super.onCreate(savedInstanceState);
+
+	    if (savedInstanceState == null) {
+	        // Add the fragment on initial activity setup
+	        mainFragment = new MainFragment();
+	        getSupportFragmentManager().beginTransaction().add(android.R.id.content, mainFragment)
+	        .commit();
+	    } else {
+	        // Or set the fragment from restored state info
+	        mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(android.R.id.content);
+	    }
+	}
 
 
     @Override
@@ -32,5 +45,21 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    protected void onResume() {
+      super.onResume();
+
+      // Logs 'install' and 'app activate' App Events.
+      AppEventsLogger.activateApp(this);
+    }
+    
+    @Override
+    protected void onPause() {
+      super.onPause();
+
+      // Logs 'app deactivate' App Event.
+      AppEventsLogger.deactivateApp(this);
     }
 }
